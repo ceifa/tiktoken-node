@@ -1,0 +1,18 @@
+[package]
+name = "tiktoken-node"
+version = "0.0.1"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+napi = { version = "2" }
+napi-derive = "2"
+tiktoken-rs = "0.2.2"
+
+[build-dependencies]
+napi-build = "2"
+
+[profile.release]
+lto = true
