@@ -1,7 +1,8 @@
 {
     "name": "tiktoken-node",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "types": "index.d.ts",
+    "main": "index.cjs",
     "napi": {
         "name": "tiktoken-node"
     },
@@ -11,8 +12,9 @@
     },
     "files": [
         "dist/*",
-        "index.js",
         "*.d.ts",
+        "index.mjs",
+        "index.cjs",
         "README.md"
     ],
     "license": "MIT",
