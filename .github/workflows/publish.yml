@@ -44,6 +44,10 @@ jobs:
           name: OS specific binaries
           path: dist
 
+      - name: Include M1 build
+        run: |
+          mv ./build/osx/tiktoken-node.darwin-arm64.node ./dist/osx/
+
   deploy:
     # prevents this action from running on forks or pull requests
     if: ${{ github.repository == 'ceifa/tiktoken-node' && github.event_name == 'push' }}
