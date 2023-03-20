@@ -1,4 +1,5 @@
 /target
 /dist
+!/dist/tiktoken-node.darwin-arm64.node
 node_modules
 Cargo.lock
