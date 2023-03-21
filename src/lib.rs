@@ -27,6 +27,28 @@ impl Encoding {
             Err(err) => Err(Error::from_reason(err.to_string())),
         }
     }
+
+    // This is much slower than the sync version, have to test if it's worth it on larger batches
+    // #[napi]
+    // pub async fn encode_batch(&self, texts: Vec<String>) -> Vec<Vec<u32>> {
+    //     let mut tasks: Vec<tokio::task::JoinHandle<Vec<u32>>> = Vec::new();
+    //     for text in texts {
+    //         let encoding = self.encoding.clone();
+    //         tasks.push(tokio::spawn(async move {
+    //             encoding
+    //                 .encode_with_special_tokens(&text)
+    //                 .iter()
+    //                 .map(|x| *x as u32)
+    //                 .collect()
+    //         }));
+    //     }
+
+    //     futures::future::join_all(tasks)
+    //         .await
+    //         .iter()
+    //         .map(|x| x.as_ref().unwrap().clone())
+    //         .collect()
+    // }
 }
 
 #[napi]
@@ -48,13 +70,9 @@ pub fn get_encoding(encoding: String) -> Result<Encoding, Error> {
 
 #[napi]
 pub fn encoding_for_model(model_name: String) -> Result<Encoding, Error> {
-    let encoding_name = tiktoken_rs::encoding_for_model(&model_name);
-    match encoding_name {
-        Some(encoding_name) => {
-            return Ok(get_encoding(encoding_name.to_string())?);
-        }
-        None => Err(Error::from_reason(format!(
-            "Error: Could not automatically map {model_name} to a tokeniser"
-        ))),
+    let encoding = tiktoken_rs::get_bpe_from_model(&model_name);
+    match encoding {
+        Ok(encoding) => Ok(Encoding { encoding }),
+        Err(err) => Err(Error::from_reason(err.to_string())),
     }
 }
