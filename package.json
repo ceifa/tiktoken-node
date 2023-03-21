@@ -1,37 +1,37 @@
 {
-    "name": "tiktoken-node",
-    "version": "0.0.4",
-    "types": "index.d.ts",
-    "main": "index.cjs",
-    "napi": {
-        "name": "tiktoken-node"
-    },
-    "exports": {
-        "import": "./index.mjs",
-        "require": "./index.cjs"
-    },
-    "files": [
-        "dist/*",
-        "*.d.ts",
-        "index.mjs",
-        "index.cjs",
-        "README.md"
-    ],
-    "license": "MIT",
-    "devDependencies": {
-        "@napi-rs/cli": "2.14.8",
-        "typescript": "4.9.5"
-    },
-    "engines": {
-        "node": ">= 14"
-    },
-    "scripts": {
-        "build:debug": "napi build --platform --no-dts-header --js false --dts ../index.d.ts ./dist",
-        "build": "npm run build:debug -- --release",
-        "format": "cargo fmt"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/ceifa/tiktoken-node"
-    }
+  "name": "tiktoken-node",
+  "version": "0.0.5",
+  "types": "index.d.ts",
+  "main": "index.cjs",
+  "napi": {
+    "name": "tiktoken-node"
+  },
+  "exports": {
+    "import": "./index.mjs",
+    "require": "./index.cjs"
+  },
+  "files": [
+    "dist/*",
+    "*.d.ts",
+    "index.mjs",
+    "index.cjs",
+    "README.md"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@napi-rs/cli": "2.14.8",
+    "typescript": "4.9.5"
+  },
+  "engines": {
+    "node": ">= 14"
+  },
+  "scripts": {
+    "build:debug": "napi build --platform --no-dts-header --js false --dts ../index.d.ts ./dist",
+    "build": "npm run build:debug -- --release",
+    "format": "cargo fmt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ceifa/tiktoken-node"
+  }
 }
