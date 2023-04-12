@@ -1,6 +1,6 @@
 [package]
 name = "tiktoken-node"
-version = "0.0.1"
+version = "0.0.6"
 edition = "2021"
 
 [lib]
@@ -11,7 +11,7 @@ crate-type = ["cdylib"]
 napi = "2"
 napi-derive = "2"
 # tokio = "1"
-tiktoken-rs = "0.3.2"
+tiktoken-rs = "0.4.0"
 # futures = "0.3.27"
 
 [build-dependencies]

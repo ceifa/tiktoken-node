@@ -1,10 +1,19 @@
 {
     "name": "tiktoken-node",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "types": "index.d.ts",
     "main": "index.cjs",
     "napi": {
-        "name": "tiktoken-node"
+        "name": "tiktoken-node",
+        "triples": {
+            "additional": [
+                "x86_64-pc-windows-msvc",
+                "x86_64-unknown-linux-gnu",
+                "aarch64-unknown-linux-gnu",
+                "x86_64-apple-darwin",
+                "aarch64-apple-darwin"
+            ]
+        }
     },
     "exports": {
         "types": "./index.d.ts",
