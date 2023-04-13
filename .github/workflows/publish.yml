@@ -5,12 +5,21 @@ on:
     branches: [main]
   pull_request:
 
+env:
+  DEBUG: 'napi:*'
+  MACOSX_DEPLOYMENT_TARGET: '10.13'
+
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        os: [windows-2022, ubuntu-20.04, macos-11]
+        target:
+          - x86_64-pc-windows-msvc
+          - x86_64-unknown-linux-gnu
+          - aarch64-unknown-linux-gnu
+          - x86_64-apple-darwin
+          - aarch64-apple-darwin
 
     steps:
       - uses: actions/checkout@v3
@@ -25,24 +34,39 @@ jobs:
         with:
           toolchain: stable
           override: true
+          target: ${{ matrix.target }}
+
+      - name: Install ziglang
+        uses: goto-bus-stop/setup-zig@v1
+        with:
+          version: 0.10.0
+
+      - run: cargo install cargo-xwin
+        if: matrix.target == 'x86_64-pc-windows-msvc'
 
       - name: Check formatting
         uses: actions-rs/cargo@v1
-        if: runner.os == 'linux'
         with:
           command: fmt
           args: --all -- --check
 
-      - name: Build
-        run: |
-          npm i
-          npm run build
+      - name: Node install
+        run: npm i
+
+      - name: Build Mac and Linux
+        if: matrix.target != 'x86_64-pc-windows-msvc'
+        run:  npm run build -- --zig --target ${{ matrix.target }}
+
+      - name: Build Windows
+        if: matrix.target == 'x86_64-pc-windows-msvc'
+        run:  npm run build -- --target ${{ matrix.target }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: OS specific binaries
           path: dist
+          if-no-files-found: error
 
   deploy:
     # prevents this action from running on forks or pull requests
@@ -58,7 +82,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: OS specific binaries
-          path: dist
+          path: dist/
 
       - name: Log files
         run: |
