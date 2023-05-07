@@ -1,5 +1,6 @@
 use napi::bindgen_prelude::Error;
 use napi_derive::napi;
+use rayon::prelude::{IntoParallelRefIterator, ParallelIterator};
 
 #[napi]
 pub struct Encoding {
@@ -28,27 +29,19 @@ impl Encoding {
         }
     }
 
-    // This is much slower than the sync version, have to test if it's worth it on larger batches
-    // #[napi]
-    // pub async fn encode_batch(&self, texts: Vec<String>) -> Vec<Vec<u32>> {
-    //     let mut tasks: Vec<tokio::task::JoinHandle<Vec<u32>>> = Vec::new();
-    //     for text in texts {
-    //         let encoding = self.encoding.clone();
-    //         tasks.push(tokio::spawn(async move {
-    //             encoding
-    //                 .encode_with_special_tokens(&text)
-    //                 .iter()
-    //                 .map(|x| *x as u32)
-    //                 .collect()
-    //         }));
-    //     }
-
-    //     futures::future::join_all(tasks)
-    //         .await
-    //         .iter()
-    //         .map(|x| x.as_ref().unwrap().clone())
-    //         .collect()
-    // }
+    #[napi]
+    pub fn encode_batch(&self, texts: Vec<String>) -> Vec<Vec<u32>> {
+        texts
+            .par_iter()
+            .map(|text| {
+                self.encoding
+                    .encode_with_special_tokens(&text)
+                    .iter()
+                    .map(|x| *x as u32)
+                    .collect()
+            })
+            .collect()
+    }
 }
 
 #[napi]
