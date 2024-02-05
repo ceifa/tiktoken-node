@@ -1,4 +1,4 @@
-const tiktoken = require('../index.js')
+const tiktoken = require('../index.cjs')
 
 let enc = tiktoken.getEncoding("gpt2")
 console.assert(enc.decode(enc.encode("hello world")) == "hello world")

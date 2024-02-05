@@ -45,7 +45,10 @@ impl Encoding {
 }
 
 #[napi]
-pub fn get_encoding(encoding: String) -> Result<Encoding, Error> {
+pub fn get_encoding(
+    #[napi(ts_arg_type = "'gpt2' | 'r50k_base' | 'p50k_base' | 'p50k_edit' | 'cl100k_base'")]
+    encoding: String,
+) -> Result<Encoding, Error> {
     let encoding: Result<tiktoken_rs::CoreBPE, Error> = match encoding.as_str() {
         "gpt2" => Ok(tiktoken_rs::r50k_base().unwrap()),
         "r50k_base" => Ok(tiktoken_rs::r50k_base().unwrap()),

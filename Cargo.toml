@@ -10,7 +10,7 @@ crate-type = ["cdylib"]
 rayon = "1.7.0"
 napi = "2"
 napi-derive = "2"
-tiktoken-rs = "0.4.2"
+tiktoken-rs = "0.5.8"
 
 [build-dependencies]
 napi-build = "2"
