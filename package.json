@@ -1,6 +1,6 @@
 {
     "name": "tiktoken-node",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "types": "index.d.ts",
     "main": "index.cjs",
     "napi": {
@@ -29,8 +29,8 @@
     ],
     "license": "MIT",
     "devDependencies": {
-        "@napi-rs/cli": "2.18.0",
-        "typescript": "5.3.3"
+        "@napi-rs/cli": "2.18.3",
+        "typescript": "5.4.5"
     },
     "engines": {
         "node": ">= 14"

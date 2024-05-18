@@ -1,6 +1,6 @@
 [package]
 name = "tiktoken-node"
-version = "0.0.6"
+version = "0.0.8"
 edition = "2021"
 
 [lib]
@@ -10,7 +10,7 @@ crate-type = ["cdylib"]
 rayon = "1.7.0"
 napi = "2"
 napi-derive = "2"
-tiktoken-rs = "0.5.8"
+tiktoken-rs = "0.5.9"
 
 [build-dependencies]
 napi-build = "2"

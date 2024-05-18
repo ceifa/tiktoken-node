@@ -46,7 +46,7 @@ impl Encoding {
 
 #[napi]
 pub fn get_encoding(
-    #[napi(ts_arg_type = "'gpt2' | 'r50k_base' | 'p50k_base' | 'p50k_edit' | 'cl100k_base'")]
+    #[napi(ts_arg_type = "'gpt2' | 'r50k_base' | 'p50k_base' | 'p50k_edit' | 'cl100k_base' | 'o200k_base'")]
     encoding: String,
 ) -> Result<Encoding, Error> {
     let encoding: Result<tiktoken_rs::CoreBPE, Error> = match encoding.as_str() {
@@ -55,6 +55,7 @@ pub fn get_encoding(
         "p50k_base" => Ok(tiktoken_rs::p50k_base().unwrap()),
         "p50k_edit" => Ok(tiktoken_rs::p50k_edit().unwrap()),
         "cl100k_base" => Ok(tiktoken_rs::cl100k_base().unwrap()),
+        "o200k_base" => Ok(tiktoken_rs::o200k_base().unwrap()),
         _ => Err(Error::from_reason("Invalid encoding")),
     };
 
